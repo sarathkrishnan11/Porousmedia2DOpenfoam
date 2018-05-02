@@ -1,0 +1,41 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      porosityProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+porosity1
+{
+    type            DarcyForchheimer;
+
+    cellZone        porosity;
+
+    d   (2771.26 2771.26 27711.26);
+    f   (0.0004827 0.0004827 0.0004827);
+
+    coordinateSystem
+    {
+        type    cartesian;
+        origin  (0 0 0);
+        coordinateRotation
+        {
+            type    axesRotation;
+            e1      (1 0 0);
+            e2      (0 1 1); //001
+        }
+    }
+}
+
+
+// ************************************************************************* //

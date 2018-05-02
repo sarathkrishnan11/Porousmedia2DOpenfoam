@@ -1,0 +1,22 @@
+#!/bin/sh
+
+cp system/singleplane1 system/singleGraph 
+porousSimpleFoam -postProcess -latestTime
+P1=$( tail -n 100 postProcessing/singleGraph/500/line_p.xy |  \
+	  awk '{pressure+=$2} END {print pressure/100 }' )
+
+rm -f singleGraph
+cp system/singleplane2 system/singleGraph 
+porousSimpleFoam -postProcess -latestTime
+P2=$( tail -n 100 postProcessing/singleGraph/500/line_p.xy |  \
+	  awk '{pressure+=$2} END {print pressure/100 }' )
+echo $P1
+echo $P2
+PD=$(awk "BEGIN {print $P1-$P2; exit}")
+echo "pressure difference : $PD" > pressureDiff.out
+echo "pressure entrance : $P1" >> pressureDiff.out
+echo "pressure exit : $P2" >> pressureDiff.out
+echo $PD
+
+
+

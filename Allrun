@@ -1,0 +1,21 @@
+#!/bin/sh
+cd ${0%/*} || exit 1    # Run from this directory
+
+#m4 system/blockMeshDict.m4 > system/blockMeshDict
+
+# Source tutorial run functions
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+runApplication blockMesh
+#runApplication `getApplication`
+
+# Parallel with output to the stdout and also writing to a file.
+#Dont forget to change the number of procs you are using in the command and also in the decomposeParDict in the system directory
+runApplication decomposePar
+mpirun -np 3 porousSimpleFoam -parallel | tee log.porousSimpleFoam  
+runApplication reconstructPar
+
+./pdiff
+
+
+
